@@ -9,6 +9,7 @@ public class SpellChecker {
 		String correction = spellChecker(word, threshold, dictionary);
 		System.out.println(correction);
 	}
+	
 	// Returns the input string , excluding it's first character
 	public static String tail(String str) {
 		return str.substring(1);
