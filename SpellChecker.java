@@ -53,7 +53,7 @@ public class SpellChecker {
 		int min = 3000;
 		for (String value: dictionary) {
 			int temp = levenshtein(word, value);
-			if (temp <= min) {
+			if ((temp <= min) && (value.length() == word.length())) {
 				min = temp;
 				fixedWord = value;
 			}
