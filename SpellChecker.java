@@ -42,24 +42,11 @@ public class SpellChecker {
 		return dictionary; // Returns the dictionary array
 	}
 
-	// Takes a string as an input and determine its presence in the dictionary
-	// Returns true if the word is found within the dictionary array, and false if it is not
-	public static boolean existInDictionary(String word, String[] dictionary) {
-		for (int i = 0; i < dictionary.length; i++) {
-			if (dictionary[i].equals(word)) {
-				return true;
-			}
-		}
-		return false;
-	}
 	
     // Receives a word, a threshold value for distance, and a dictionary as inputs.
     // It returns the word from the dictionary that most closely resembles the given word
 	public static String spellChecker(String word, int threshold, String[] dictionary) {
 		word = word.toLowerCase(); // Lowercases the given word
-		if ((existInDictionary(word, dictionary))) {
-			return word;
-		}
 		// This loop calculates the edit distance between the given word and each word in the dictionary. 
         // Identifies the word with the minimum distance, checks whether this distance exceeds the given threshold, and proceeds with
         // the appropriate action based on this evaluation.
@@ -67,7 +54,7 @@ public class SpellChecker {
 		int min = 3000;
 		for (String value: dictionary) {
 			int temp = levenshtein(word, value);
-			if ((temp <= min) && (value.length() == word.length())) {
+			if ((temp <= min) && (value.length() <= word.length())) {
 				min = temp;
 				fixedWord = value;
 			}
