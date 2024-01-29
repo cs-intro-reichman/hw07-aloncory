@@ -50,17 +50,11 @@ public class SpellChecker {
 		// This loop calculates the edit distance between the given word and each word in the dictionary. 
         // Identifies the word with the minimum distance, checks whether this distance exceeds the given threshold, and proceeds with
         // the appropriate action based on this evaluation.
-		String fixedWord = "";
-		int min = 3000;
 		for (String value: dictionary) {
-			int temp = levenshtein(word, value);
-			if ((temp <= min) && (value.length() <= word.length())) {
-				min = temp;
-				fixedWord = value;
+			int min = levenshtein(word, value);
+			if ((min <= threshold) && (value.length() <= word.length())) {
+				return value;
 			}
-		}
-		if (min <= threshold) {
-			return fixedWord;
 		}
 		// If the smallest distance found is greater than the threshold value, this indicates that no word in the dictionary is sufficiently similar to the given
         // word. In this case, the function returns the original word. 
