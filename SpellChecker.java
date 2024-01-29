@@ -9,27 +9,61 @@ public class SpellChecker {
 		String correction = spellChecker(word, threshold, dictionary);
 		System.out.println(correction);
 	}
-
+	// Returns the input string , excluding it's first character
 	public static String tail(String str) {
-		// Your code goes here
+		return str.substring(1);
 	}
 
+    // This recursive function accepts two strings as input. 
+	// Returns the minimum edit distance between these two words, as an integer.
 	public static int levenshtein(String word1, String word2) {
-		// Your code goes here
+		word1 = word1.toLowerCase(); // Lowercases the word
+		word2 = word2.toLowerCase(); // Lowercases the word
+		if (word1.length() == 0) {
+			return word2.length();
+		}
+		if (word2.length() == 0) {
+			return word1.length();
+		}
+		if (word1.charAt(0) == word2.charAt(0)) {
+			return levenshtein(tail(word1), tail(word2));
+		} else { 
+			return (1 + Math.min(Math.min(levenshtein(tail(word1), word2), levenshtein(word1, tail(word2))), levenshtein(tail(word1), tail(word2))));
+		}
 	}
 
+	// Reads a file that contains the 3,000 most frequently used words in English , and saves the words in an array
 	public static String[] readDictionary(String fileName) {
-		String[] dictionary = new String[3000];
-
-		In in = new In(fileName);
-
-		// Your code here
-
-		return dictionary;
+		String[] dictionary = new String[3000]; // Building an array of 3,000 strings
+		In in = new In(fileName); // Reads the file of the dictionary
+		for (int i = 0; i < dictionary.length; i++) {
+			dictionary[i] = in.readLine(); // Reads each word from the file, and stores it in the array
+		}
+		return dictionary; // Returns the dictionary array
 	}
-
+	
+    // Receives a word, a threshold value for distance, and a dictionary as inputs.
+    // It returns the word from the dictionary that most closely resembles the given word
 	public static String spellChecker(String word, int threshold, String[] dictionary) {
-		// Your code goes here
+		word = word.toLowerCase(); // Lowercases the given word
+		// This loop calculates the edit distance between the given word and each word in the dictionary. 
+        // Identifies the word with the minimum distance, checks whether this distance exceeds the given threshold, and proceeds with
+        // the appropriate action based on this evaluation.
+		String fixedWord = "";
+		int min = 3000;
+		for (String value: dictionary) {
+			int temp = levenshtein(word, value);
+			if (temp <= min) {
+				min = temp;
+				fixedWord = value;
+			}
+		}
+		if (min <= threshold) {
+			return fixedWord;
+		}
+		// If the smallest distance found is greater than the threshold value, this indicates that no word in the dictionary is sufficiently similar to the given
+        // word. In this case, the function returns the original word. 
+		return word;
 	}
 
 }
