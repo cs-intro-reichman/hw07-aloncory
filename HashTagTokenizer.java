@@ -49,7 +49,7 @@ public class HashTagTokenizer {
 			// Checks if the prefix is a valid word
 			if (existInDictionary(prefix, dictionary)) {
 				System.out.println(prefix); // Prints the founded word 
-				breakHashTag(hashtag.substring(prefix.length()), dictionary); // Recursive call , this time with the hashtag prefix minus the founded word
+				breakHashTag(hashtag.substring(prefix.length()), dictionary); // Recursive call , this time with the hashtag prefix minus the found word
 				break; // Stops the loop (This command ensures that the function indeed "cuts" the hashtag and only the words that embedded in the hashtag are printed)
 			}
         }
