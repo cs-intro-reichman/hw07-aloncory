@@ -57,12 +57,13 @@ public class SpellChecker {
     // It returns the word from the dictionary that most closely resembles the given word
 	public static String spellChecker(String word, int threshold, String[] dictionary) {
 		word = word.toLowerCase(); // Lowercases the given word
-		// This loop calculates the edit distance between the given word and each word in the dictionary. 
-        // Identifies the word with the minimum distance, checks whether this distance exceeds the given threshold, and proceeds with
-        // the appropriate action based on this evaluation.
+		// If the given word is found within the dictionary array, it returns the input word
 		if (existInDictionary(word, dictionary)) {
 			return word;
 		}
+		// This loop calculates the edit distance between the given word and each word in the dictionary. 
+        // Identifies the word with the minimum distance, checks whether this distance exceeds the given threshold, and proceeds with
+        // the appropriate action based on this evaluation.
 		for (String value: dictionary) {
 			int min = levenshtein(word, value);
 			if ((min <= threshold) && (value.length() <= word.length())) {
